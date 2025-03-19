@@ -14,11 +14,10 @@ class MsgEditBloc extends Bloc<MsgEditEvent, MsgEditState> {
     MsgEditEvent event,
     Emitter<MsgEditState> emit,
   ) async {
-    emit(MsgEditLoading());
     if (event is SubmitMsgEvent) {
       try {
-        // Here you would typically handle API calls or any async tasks
-        // For now, we simulate a successful submission
+        // handle API calls
+        emit(MsgEditLoading());
         await Future.delayed(const Duration(seconds: 2));
         final Msg newMsg = Msg(
           text: event.text,

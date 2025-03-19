@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_grateful/bloc/msg_edit_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_grateful/cubit/search_friend_cubit.dart';
 import 'package:flutter_grateful/pages/search_friend_page.dart';
 
 import '../models/msg.dart';
@@ -65,7 +66,11 @@ class _MsgEditPageState extends State<MsgEditPage> {
                         final selectedValue = await Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SearchFriendPage()),
+                            builder: (context) => BlocProvider(
+                              create: (context) => SearchFriendCubit(),
+                              child: const SearchFriendPage(),
+                            ),
+                          ),
                         );
 
                         // If a value was selected, set it in the controller
@@ -101,7 +106,7 @@ class _MsgEditPageState extends State<MsgEditPage> {
                                   SubmitMsgEvent(
                                     text: _textController.text,
                                     from: 1,
-                                    to: int.parse(_toController.text),
+                                    to: 2,
                                     privacy: _privacy,
                                   ),
                                 );
