@@ -2,14 +2,14 @@ class Msg {
   int id = 0;
   String text;
   int from;
-  int? to;
+  int to;
   DateTime createAt = DateTime.now();
   Privacy privacy;
 
   Msg({
     required this.text,
     required this.from,
-    this.to,
+    required this.to,
     this.privacy = Privacy.public,
   });
 }

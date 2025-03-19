@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_grateful/bloc/msg_edit_bloc.dart';
+import 'package:flutter_grateful/bloc/msg_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grateful/cubit/search_friend_cubit.dart';
 import 'package:flutter_grateful/pages/search_friend_page.dart';
@@ -26,14 +26,14 @@ class _MsgEditPageState extends State<MsgEditPage> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: BlocProvider(
-          create: (context) => MsgEditBloc(),
-          child: BlocConsumer<MsgEditBloc, MsgEditState>(
+          create: (context) => MsgBloc(),
+          child: BlocConsumer<MsgBloc, MsgState>(
             listener: (context, state) {
-              if (state is MsgEditSuccess) {
+              if (state is MsgUpdated) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Message Sent: ${state.msg.text}')),
                 );
-              } else if (state is MsgEditError) {
+              } else if (state is Error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Error: ${state.error}')),
                 );
@@ -102,8 +102,8 @@ class _MsgEditPageState extends State<MsgEditPage> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            context.read<MsgEditBloc>().add(
-                                  SubmitMsgEvent(
+                            context.read<MsgBloc>().add(
+                                  UpdateMsgEvent(
                                     text: _textController.text,
                                     from: 1,
                                     to: 2,
@@ -115,7 +115,7 @@ class _MsgEditPageState extends State<MsgEditPage> {
                         child: const Text('Submit'),
                       ),
                     ),
-                    if (state is MsgEditLoading)
+                    if (state is Loading)
                       const Center(child: CircularProgressIndicator()),
                   ],
                 ),
