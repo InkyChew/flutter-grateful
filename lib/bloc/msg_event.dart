@@ -8,9 +8,10 @@ sealed class MsgEvent extends Equatable {
 }
 
 class GetMsgListEvent extends MsgEvent {
-  final List<Msg> msgList;
+  final int? from;
+  final int to;
 
-  const GetMsgListEvent({required this.msgList});
+  const GetMsgListEvent({this.from, required this.to});
 }
 
 class UpdateMsgEvent extends MsgEvent {
@@ -32,4 +33,3 @@ class RemoveMsgEvent extends MsgEvent {
 
   const RemoveMsgEvent({required this.msg});
 }
-

@@ -7,10 +7,27 @@ part 'msg_state.dart';
 
 class MsgBloc extends Bloc<MsgEvent, MsgState> {
   final List<Msg> _msgList = [
-    Msg(text: "You are awesome.", from: 1, to: 1),
-    Msg(text: "It's a sunny day.", from: 1, to: 1),
-    Msg(text: "You're so beautiful.", from: 1, to: 1),
+    Msg(
+        text:
+            "You are awesome.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure voluptas ducimus esse deserunt temporibus sunt recusandae provident culpa in.",
+        from: 1,
+        to: 1),
+    Msg(
+        text:
+            "It's a sunny day.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure voluptas ducimus esse deserunt temporibus sunt recusandae provident culpa in.",
+        from: 2,
+        to: 1),
+    Msg(
+        text:
+            "You're so beautiful.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,",
+        from: 3,
+        to: 1),
     Msg(text: "Hi it's nice to see you.", from: 1, to: 1),
+    Msg(
+        text:
+            "Hi it's a new day.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure",
+        from: 1,
+        to: 1),
   ];
 
   MsgBloc() : super(Initial()) {
@@ -27,7 +44,14 @@ class MsgBloc extends Bloc<MsgEvent, MsgState> {
       // handle API calls
       emit(Loading());
       await Future.delayed(const Duration(seconds: 2));
-      emit(MsgListLoaded(_msgList));
+
+      Iterable<Msg> filteredMsgList = _msgList.where((m) => m.to == event.to);
+      if (event.from != null) {
+        filteredMsgList = _msgList.where((m) {
+          return (event.from == -1) ? m.from != event.to : m.from == event.from;
+        });
+      }
+      emit(MsgListLoaded(filteredMsgList.toList()));
     } catch (e) {
       emit(Error(e.toString()));
     }
