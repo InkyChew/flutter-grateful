@@ -20,8 +20,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     try {
       emit(HomeLoading());
   
-      final all = await _msgService.getMessages(to: 1);
-      final recevied = await _msgService.getMessages(to: 1, from: -1);
+      final all = await _msgService.getMessages(to: event.userId);
+      final recevied = await _msgService.getMessages(to: event.userId, from: -1);
 
       emit(HomeLoaded(all, recevied));
     } catch (e) {

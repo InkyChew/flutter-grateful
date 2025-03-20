@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grateful/bloc/home_bloc.dart';
 import 'package:flutter_grateful/bloc/msg_bloc.dart';
 import 'package:flutter_grateful/pages/msg_edit_page.dart';
-import 'package:flutter_grateful/pages/msg_list_page.dart';
 import 'package:flutter_grateful/services/msg_service.dart';
+import 'package:flutter_grateful/widgets/msg_count_widget.dart';
 
 MsgService _msgService = MsgService();
 
@@ -36,50 +36,19 @@ class HomePage extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => MsgBloc(_msgService)
-                                ..add(GetMsgListEvent(to: userId)),
-                              child: MsgListPage(
-                                userId: userId,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          const Text('All'),
-                          Text(state.allMessages.length.toString()),
-                        ],
-                      ),
+                    MsgCountWidget(
+                      text: 'All',
+                      userId: userId,
+                      msgService: _msgService,
+                      count: state.allMessages.length,
                     ),
                     const SizedBox(width: 16.0),
-                    GestureDetector(
-                      onTap: () async {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => BlocProvider(
-                              create: (context) => MsgBloc(_msgService)
-                                ..add(GetMsgListEvent(from: -1, to: userId)),
-                              child: MsgListPage(
-                                userId: userId,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      child: Column(
-                        children: [
-                          const Text('Receive'),
-                          Text(state.receivedMessages.length.toString()),
-                        ],
-                      ),
+                    MsgCountWidget(
+                      from: -1,
+                      text: 'Receive',
+                      userId: userId,
+                      msgService: _msgService,
+                      count: state.receivedMessages.length,
                     ),
                   ],
                 ),
@@ -89,28 +58,26 @@ class HomePage extends StatelessWidget {
             }
           },
         ),
-        floatingActionButton: Builder(
-          builder: (context) {
-            return FloatingActionButton(
-              onPressed: () async {
-                await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => BlocProvider(
-                      create: (context) => MsgBloc(_msgService),
-                      child: const MsgEditPage(),
-                    ),
+        floatingActionButton: Builder(builder: (context) {
+          return FloatingActionButton(
+            onPressed: () async {
+              await Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BlocProvider(
+                    create: (context) => MsgBloc(_msgService),
+                    child: const MsgEditPage(),
                   ),
-                );
-            
-                if (context.mounted) {
-                  context.read<HomeBloc>().add(HomeLoadedEvent(userId));
-                }
-              },
-              child: const Icon(Icons.edit),
-            );
-          }
-        ),
+                ),
+              );
+
+              if (context.mounted) {
+                context.read<HomeBloc>().add(HomeLoadedEvent(userId));
+              }
+            },
+            child: const Icon(Icons.edit),
+          );
+        }),
       ),
     );
   }
