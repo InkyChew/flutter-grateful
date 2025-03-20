@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_grateful/bloc/msg_bloc.dart';
+import 'package:flutter_grateful/bloc/msg_list_bloc.dart';
 import 'package:flutter_grateful/pages/msg_list_page.dart';
 import 'package:flutter_grateful/services/msg_service.dart';
 
@@ -27,9 +27,10 @@ class MsgCountWidget extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => BlocProvider(
-              create: (context) => MsgBloc(msgService)
+              create: (context) => MsgListBloc(msgService)
                 ..add(GetMsgListEvent(from: from, to: userId)),
               child: MsgListPage(
+                msgService: msgService,
                 userId: userId,
               ),
             ),

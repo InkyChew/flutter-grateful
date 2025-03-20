@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_grateful/bloc/home_bloc.dart';
-import 'package:flutter_grateful/bloc/msg_bloc.dart';
+import 'package:flutter_grateful/bloc/msg_edit_bloc.dart';
+import 'package:flutter_grateful/models/msg.dart';
 import 'package:flutter_grateful/pages/msg_edit_page.dart';
 import 'package:flutter_grateful/services/msg_service.dart';
 import 'package:flutter_grateful/widgets/msg_count_widget.dart';
@@ -65,7 +66,9 @@ class HomePage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) => BlocProvider(
-                    create: (context) => MsgBloc(_msgService),
+                    create: (context) => MsgEditBloc(
+                        msgService: _msgService,
+                        msg: Msg(text: '', from: userId, to: userId)),
                     child: const MsgEditPage(),
                   ),
                 ),

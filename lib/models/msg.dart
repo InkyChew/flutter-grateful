@@ -1,5 +1,5 @@
 class Msg {
-  int id = 0;
+  int id;
   String text;
   int from;
   int to;
@@ -7,6 +7,7 @@ class Msg {
   Privacy privacy;
 
   Msg({
+    this.id = 0,
     required this.text,
     required this.from,
     required this.to,

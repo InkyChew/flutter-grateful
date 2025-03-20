@@ -3,22 +3,26 @@ import 'package:flutter_grateful/models/msg.dart';
 class MsgService {
   final List<Msg> _messages = [
     Msg(
+        id: 1,
         text:
             "You are awesome.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure voluptas ducimus esse deserunt temporibus sunt recusandae provident culpa in.",
         from: 1,
         to: 1),
     Msg(
+        id: 2,
         text:
             "It's a sunny day.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure voluptas ducimus esse deserunt temporibus sunt recusandae provident culpa in.",
         from: 2,
         to: 1),
     Msg(
+        id: 3,
         text:
             "You're so beautiful.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,",
         from: 3,
         to: 1),
-    Msg(text: "Hi it's nice to see you.", from: 1, to: 1),
+    Msg(id: 4, text: "Hi it's nice to see you.", from: 1, to: 1),
     Msg(
+        id: 5,
         text:
             "Hi it's a new day.Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime, iure",
         from: 1,
