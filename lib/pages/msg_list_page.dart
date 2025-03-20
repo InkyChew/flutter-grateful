@@ -21,6 +21,9 @@ class MsgListPage extends StatelessWidget {
             Expanded(
               child: BlocConsumer<MsgBloc, MsgState>(
                 listener: (context, state) {
+                  if (state is MsgUpdated) {
+                    // context.read<MsgBloc>().add(GetMsgListEvent(to: userId));
+                  }
                   if (state is Error) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(content: Text('Error: ${state.error}')),

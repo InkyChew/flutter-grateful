@@ -28,9 +28,7 @@ class _MsgEditPageState extends State<MsgEditPage> {
         child: BlocConsumer<MsgBloc, MsgState>(
           listener: (context, state) {
             if (state is MsgUpdated) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Message Sent: ${state.msg.text}')),
-              );
+              Navigator.pop(context);
             } else if (state is Error) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Error: ${state.error}')),
@@ -70,7 +68,7 @@ class _MsgEditPageState extends State<MsgEditPage> {
                           ),
                         ),
                       );
-        
+
                       // If a value was selected, set it in the controller
                       if (selectedValue != null) {
                         _toController.text = selectedValue;
@@ -101,12 +99,12 @@ class _MsgEditPageState extends State<MsgEditPage> {
                       onPressed: () {
                         if (_formKey.currentState!.validate()) {
                           context.read<MsgBloc>().add(
-                                UpdateMsgEvent(
+                                UpdateMsgEvent(Msg(
                                   text: _textController.text,
                                   from: 1,
                                   to: 2,
                                   privacy: _privacy,
-                                ),
+                                )),
                               );
                         }
                       },

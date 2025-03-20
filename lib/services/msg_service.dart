@@ -38,4 +38,28 @@ class MsgService {
     }
     return filteredMsgList.toList();
   }
+
+  Future updateMessage(Msg msg) async {
+    // handle API calls
+    await Future.delayed(const Duration(seconds: 2));
+    if (msg.id == 0) {
+      _messages.add(msg);
+    } else {
+      int index = _messages.indexWhere((m) => m.id == msg.id);
+      if (index != -1) {
+        _messages[index] = Msg(
+          text: msg.text,
+          from: msg.from,
+          to: msg.to,
+          privacy: msg.privacy,
+        );
+      }
+    }
+  }
+
+  Future deleteMessage(Msg msg) async {
+    // handle API calls
+    await Future.delayed(const Duration(seconds: 2));
+    _messages.remove(msg);
+  }
 }

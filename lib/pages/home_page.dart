@@ -6,6 +6,8 @@ import 'package:flutter_grateful/pages/msg_edit_page.dart';
 import 'package:flutter_grateful/pages/msg_list_page.dart';
 import 'package:flutter_grateful/services/msg_service.dart';
 
+MsgService _msgService = MsgService();
+
 class HomePage extends StatelessWidget {
   final int userId = 1;
   const HomePage({super.key});
@@ -18,7 +20,7 @@ class HomePage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) =>
-            HomeBloc(MsgService())..add(HomeLoadedEvent(userId)),
+            HomeBloc(_msgService)..add(HomeLoadedEvent(userId)),
         child: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeError) {
@@ -41,8 +43,8 @@ class HomePage extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
-                              create: (context) =>
-                                  MsgBloc()..add(GetMsgListEvent(to: userId)),
+                              create: (context) => MsgBloc(_msgService)
+                                ..add(GetMsgListEvent(to: userId)),
                               child: MsgListPage(
                                 userId: userId,
                               ),
@@ -57,13 +59,14 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
+                    const SizedBox(width: 16.0),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => BlocProvider(
-                              create: (context) => MsgBloc()
+                              create: (context) => MsgBloc(_msgService)
                                 ..add(GetMsgListEvent(from: -1, to: userId)),
                               child: MsgListPage(
                                 userId: userId,
@@ -94,7 +97,7 @@ class HomePage extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => BlocProvider(
-                create: (context) => MsgBloc(),
+                create: (context) => MsgBloc(_msgService),
                 child: const MsgEditPage(),
               ),
             ),

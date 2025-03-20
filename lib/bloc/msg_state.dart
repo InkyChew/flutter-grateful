@@ -23,8 +23,4 @@ final class MsgListLoaded extends MsgState {
   const MsgListLoaded(this.msgList);
 }
 
-final class MsgUpdated extends MsgState {
-  final Msg msg;
-
-  const MsgUpdated(this.msg);
-}
+final class MsgUpdated extends MsgState {}

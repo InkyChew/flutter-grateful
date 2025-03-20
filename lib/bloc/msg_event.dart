@@ -15,17 +15,9 @@ class GetMsgListEvent extends MsgEvent {
 }
 
 class UpdateMsgEvent extends MsgEvent {
-  final String text;
-  final int from;
-  final int to;
-  final Privacy privacy;
+  final Msg msg;
 
-  const UpdateMsgEvent({
-    required this.text,
-    required this.from,
-    required this.to,
-    required this.privacy,
-  });
+  const UpdateMsgEvent(this.msg);
 }
 
 class RemoveMsgEvent extends MsgEvent {
