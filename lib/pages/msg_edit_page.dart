@@ -13,7 +13,7 @@ class MsgEditPage extends StatefulWidget {
   State<MsgEditPage> createState() => _MsgEditPageState();
 }
 
-class _MsgEditPageState extends State<MsgEditPage> {
+class _MsgEditPageState extends State<MsgEditPage>  {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = TextEditingController();
   final TextEditingController _toController = TextEditingController();
@@ -102,7 +102,7 @@ class _MsgEditPageState extends State<MsgEditPage> {
                                 UpdateMsgEvent(Msg(
                                   text: _textController.text,
                                   from: 1,
-                                  to: 2,
+                                  to: 1,
                                   privacy: _privacy,
                                 )),
                               );

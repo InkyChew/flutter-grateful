@@ -14,14 +14,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: BlocProvider(
-        create: (context) =>
-            HomeBloc(_msgService)..add(HomeLoadedEvent(userId)),
-        child: BlocConsumer<HomeBloc, HomeState>(
+    return BlocProvider(
+      create: (context) => HomeBloc(_msgService)..add(HomeLoadedEvent(userId)),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
+        ),
+        body: BlocConsumer<HomeBloc, HomeState>(
           listener: (context, state) {
             if (state is HomeError) {
               ScaffoldMessenger.of(context).showSnackBar(
@@ -61,7 +60,7 @@ class HomePage extends StatelessWidget {
                     ),
                     const SizedBox(width: 16.0),
                     GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -90,20 +89,28 @@ class HomePage extends StatelessWidget {
             }
           },
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => BlocProvider(
-                create: (context) => MsgBloc(_msgService),
-                child: const MsgEditPage(),
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.edit),
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              onPressed: () async {
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => MsgBloc(_msgService),
+                      child: const MsgEditPage(),
+                    ),
+                  ),
+                );
+            
+                if (context.mounted) {
+                  context.read<HomeBloc>().add(HomeLoadedEvent(userId));
+                }
+              },
+              child: const Icon(Icons.edit),
+            );
+          }
+        ),
       ),
     );
   }
